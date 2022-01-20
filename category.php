@@ -1,6 +1,6 @@
 <?php 
 include("includes/connection.php");
-$sql="SELECT * FROM `tblposts` WHERE `CategoryId`={$_GET['catId']}";
+$sql="SELECT * FROM `tblposts` WHERE `CategoryId`={$_GET['catId']} AND `Is_Active`=1";
 $query=mysqli_query($connect,"$sql");
 ?>
 <!DOCTYPE html>

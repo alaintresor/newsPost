@@ -2,6 +2,10 @@
 include("includes/connection.php");
 $sql="SELECT * FROM `tblposts` WHERE `id`={$_GET['id']}";
 $newsInfor=mysqli_fetch_array(mysqli_query($connect,"$sql"));
+
+//update views for post
+$sql2="UPDATE `tblposts` SET `views`=views+1 WHERE `id`={$_GET['id']}";
+mysqli_query($connect,"$sql2");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +86,7 @@ $newsInfor=mysqli_fetch_array(mysqli_query($connect,"$sql"));
                                 <span>John Doe</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="ml-3"><i class="far fa-eye mr-2"></i>12345</span>
+                                <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $newsInfor['views'] ?></span>
                                 <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
                             </div>
                         </div>
