@@ -1,9 +1,9 @@
 <?php 
 if(isset($_GET['id']))
 {
-$trandingNews=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `id`!={$_GET['id']} AND `Is_Active`=1 ORDER BY `tblposts`.`PostingDate` DESC LIMIT 5;");
+$trandingNews=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `id`!={$_GET['id']} AND `Is_Active`=1 ORDER BY `tblposts`.`views` DESC LIMIT 5;");
 }else
-$trandingNews=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `Is_Active`=1 ORDER BY `tblposts`.`PostingDate` DESC LIMIT 5;");
+$trandingNews=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `Is_Active`=1 ORDER BY `tblposts`.`views` DESC LIMIT 5;");
 ?>
 <div class="mb-3">
   <div class="section-title mb-0">

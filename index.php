@@ -1,4 +1,6 @@
-<?php include("includes/connection.php"); ?>
+<?php
+include("includes/connection.php");
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,14 +26,121 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style1.css"rel="stylesheet">
+   
 </head>
 
 <body>
-   <!-- header  -->
-   <?php include("includes/header.php"); ?>
-   <!-- end header  -->
+    <?php include("includes/header.php") ?>
 
+    <!-- Main News Slider Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-7 px-0">
+              
+                <div class="owl-carousel main-carousel position-relative">
+                <?php
+                     
+                     $year=date("Y");
+                     $sql="SELECT tblposts.PostImage,tblposts.id,tblposts.PostingDate,tblposts.PostTitle,tblcategory.CategoryName FROM tblposts,tblcategory 
+                     where tblposts.CategoryId=tblcategory.id";
+                     $query=$connect->query($sql);
+                     while($row=mysqli_fetch_array($query))
+                     { ?>
+                    <div class="position-relative overflow-hidden" style="height: 500px;">
+                    <?php   echo "<img  class='img-fluid h-100' src='admin/postimages/".$row['PostImage']."' style='object-fit: cover;'>";
+               
+                    ?>   
+                    <div class="overlay">
+                            <div class="mb-2">
+                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                    href=""><?php echo $row['CategoryName'];?></a>
+                                <a class="text-white" href="">Published on <?php echo $row['PostingDate'];?></a>
+                            </div>
+                            <a class="h2 m-0 text-white text-uppercase font-weight-bold" href=""><?php echo $row['PostTitle'];?></a>
+                        </div>
+                    </div>
+                    <?php }?>
+                </div>
+                     
+            </div>
+            <div class="col-lg-5 px-0">
+                <div class="row mx-0">
+                    <div class="col-md-6 px-0">
+                        <div class="position-relative overflow-hidden" style="height: 250px;">
+                            <img class="img-fluid w-100 h-100" src="img/news-700x435-1.jpg" style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                </div>
+                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <div class="position-relative overflow-hidden" style="height: 250px;">
+                            <img class="img-fluid w-100 h-100" src="img/news-700x435-2.jpg" style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                </div>
+                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <div class="position-relative overflow-hidden" style="height: 250px;">
+                            <img class="img-fluid w-100 h-100" src="img/news-700x435-3.jpg" style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                </div>
+                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 px-0">
+                        <div class="position-relative overflow-hidden" style="height: 250px;">
+                            <img class="img-fluid w-100 h-100" src="img/news-700x435-4.jpg" style="object-fit: cover;">
+                            <div class="overlay">
+                                <div class="mb-2">
+                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
+                                        href="">Business</a>
+                                    <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                </div>
+                                <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main News Slider End -->
+
+ <!-- Breaking News Start -->
+ <div class="container-fluid bg-dark py-3 mb-3">
+        <div class="container">
+            <div class="row align-items-center bg-dark">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="bg-primary text-dark text-center font-weight-medium py-2" style="width: 170px;">Breaking News</div>
+                        <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center ml-3"
+                            style="width: calc(100% - 170px); padding-right: 90px;">
+                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
+                            <div class="text-truncate"><a class="text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breaking News End -->
     <!-- Featured News Slider Start -->
     <div class="container-fluid pt-5 mb-3">
         <div class="container">
@@ -41,10 +150,10 @@
             
             <div class="owl-carousel news-carousel carousel-item-4 position-relative">
             <?php
-                     $conn=new mysqli("localhost","root","","world_show");
+                     
                      $sql="SELECT tblposts.PostImage,tblposts.PostingDate,tblposts.PostTitle,tblcategory.CategoryName FROM tblposts,tblcategory 
                      where tblposts.CategoryId=tblcategory.id";
-                     $query=$conn->query($sql);
+                     $query=$connect->query($sql);
                      while($row=mysqli_fetch_array($query))
                      { ?> 
             <div class="position-relative overflow-hidden" style="height: 300px;">
@@ -91,10 +200,10 @@
                             
                         </div>
                         <?php
-                     $conn=new mysqli("localhost","root","","world_show");
+                     
                      $sql="SELECT tblposts.PostImage,tblposts.id,tblposts.PostingDate,tblposts.PostTitle,tblcategory.CategoryName FROM tblposts,tblcategory 
                      where tblposts.CategoryId=tblcategory.id";
-                     $query=$conn->query($sql);
+                     $query=$connect->query($sql);
                      while($row=mysqli_fetch_array($query))
                      { ?>
                          
@@ -112,7 +221,7 @@
                                     </div>
                                     <p class="m-0"><?php echo $row['PostTitle'];?></p>
                                     <a  class="more-link"
-                                            href="readmore.php?id=<?php echo $row['id'];?>">Read more&rarr;</a>
+                                            href="read.php?id=<?php echo $row['id'];?>">Read more&rarr;</a>
                                       
 
                                 </div>
@@ -160,46 +269,15 @@
                     <!-- Social Follow End -->
 
                     <!-- Ads Start -->
-                    <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">Advertisement</h4>
-                        </div>
-                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-    <?php
-                     $conn=new mysqli("localhost","root","","world_show");
-                     $sql="SELECT PostImage FROM tblposts where id=7";
-    
-                     $query=$conn->query($sql);
-                     $row=mysqli_fetch_array($query);
-                     ?>
-                       <?php   echo "<img  class='d-block w-100' src='admin/postimages/".$row['PostImage']."'>";
-               
-                      ?>
-     
-    </div>
-   
-    <?php
-                     $conn=new mysqli("localhost","root","","world_show");
-                     $sql="SELECT * FROM tblposts ";
-    
-                     $query=$conn->query($sql);
-                    while($row=mysqli_fetch_array($query)){
-                     ?> <div class="carousel-item">
-                       <?php   echo "<img  class='d-block w-100' src='admin/postimages/".$row['PostImage']."'>";
-               
-               ?></div><?php } ?>
-      
-   
-   
-  </div>
-</div>
-                    </div>
+                    <?php 
+                    include("includes/ads.php")
+                    ?>
                     <!-- Ads End -->
 
                     <!-- Popular News Start -->
-                    <?php include("includes/tranding.php"); ?>
+                    <?php 
+                    include("includes/tranding.php")
+                    ?>
                     <!-- Popular News End -->
 
                     <!-- Newsletter Start -->
@@ -235,7 +313,7 @@
 
 
     <!-- Footer Start -->
-   <?php include("includes/footer.php"); ?>
+    <?php include("includes/footer.php") ?>
     <!-- Footer End -->
 
 
@@ -251,7 +329,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="js/main1js"></script>
+   
 </body>
 
 </html>

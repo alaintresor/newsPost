@@ -6,13 +6,37 @@ $newsInfor=mysqli_fetch_array(mysqli_query($connect,"$sql"));
 //update views for post
 $sql2="UPDATE `tblposts` SET `views`=views+1 WHERE `id`={$_GET['id']}";
 mysqli_query($connect,"$sql2");
+
+//get top tranding news
+$topTranding=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `Is_Active`=1 ORDER BY `tblposts`.`views` DESC LIMIT 3; ");
+
+if (isset($_POST['submit']))
+ {
+   $name=$_POST['names'];
+   $id=$_GET['id'];
+   $email=$_POST['email'];
+   $phone=$_POST['phone'];
+   $message=$_POST['message'];
+   $sql="INSERT INTO comment(fullname,email,phone,message,tokenid)
+   VALUES('$name','$email','$phone','$message','$id')";
+   if ($connect->query($sql)) 
+   {
+       echo"<script>alert('The comment sent successfully');</script>";
+       header('location:index.php');
+
+   }
+   else{
+   echo"<script>alert('Samething went wrong');</script>";
+}
+}
+$id=$_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>BizNews - Free News Website Template</title>
+    <title><?php echo $newsInfor["PostTitle"] ?></title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -49,8 +73,13 @@ mysqli_query($connect,"$sql2");
                         </div>
                         <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center bg-white border border-left-0"
                             style="width: calc(100% - 180px); padding-right: 100px;">
-                            <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
-                            <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed faucibus nisl sodales</a></div>
+                            <?php
+                            while($row=mysqli_fetch_array($topTranding))
+                            {
+                             ?>
+                            <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold" href="read.php?id=<?php echo $row['id'] ?>"><?php echo $row['PostTitle'] ?></a></div>
+                            
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -93,44 +122,39 @@ mysqli_query($connect,"$sql2");
                     </div>
                     <!-- News Detail End -->
 
-                    <!-- Comment List Start -->
+                   <!-- Comment List Start -->
                     <div class="mb-3">
                         <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">3 Comments</h4>
+                        <?php
+                     $sql="SELECT * from comment where tokenid='$id'";
+                     $sql1="SELECT * FROM comment where tokenid='$id'";
+                     $query1=$connect->query($sql1);
+                     $query=$connect->query($sql);
+                     $row=mysqli_fetch_array($query);
+                     $row1=mysqli_fetch_array($query1);
+                     ?>
+                            <h4 class="m-0 text-uppercase font-weight-bold"><?php echo $query->num_rows;?> Comments</h4>
+                  
                         </div>
                         <div class="bg-white border border-top-0 p-4">
+                        <?php
+                     $sql1="SELECT * FROM comment where tokenid='$id'";
+                     $query1=$connect->query($sql1);
+                
+                     while($row1=mysqli_fetch_array($query1)){
+                     ?>
                             <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <img src="img/images.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                 <div class="media-body">
-                                    <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                        accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
+                                    <h6><a class="text-secondary font-weight-bold" href=""><?php echo $row1['fullname'];?></a> <small><i><?php echo $row1['commentDate'] ?></i></small></h6>
+                                    <p><?php echo $row1['message'];?></p>
                                     <button class="btn btn-sm btn-outline-secondary">Reply</button>
                                 </div>
                             </div>
-                            <div class="media">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                <div class="media-body">
-                                    <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                        accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                    <button class="btn btn-sm btn-outline-secondary">Reply</button>
-                                    <div class="media mt-4">
-                                        <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1"
-                                            style="width: 45px;">
-                                        <div class="media-body">
-                                            <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan 2045</i></small></h6>
-                                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor
-                                                labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed
-                                                eirmod ipsum.</p>
-                                            <button class="btn btn-sm btn-outline-secondary">Reply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php }?>
+                           
                         </div>
                     </div>
-                    <!-- Comment List End -->
 
                     <!-- Comment Form Start -->
                     <div class="mb-3">
@@ -138,32 +162,33 @@ mysqli_query($connect,"$sql2");
                             <h4 class="m-0 text-uppercase font-weight-bold">Leave a comment</h4>
                         </div>
                         <div class="bg-white border border-top-0 p-4">
-                            <form>
+                              <form action="" method="post" >
                                 <div class="form-row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="name">Name *</label>
-                                            <input type="text" class="form-control" id="name">
+                                            <input type="text"  name="names"class="form-control" id="name">
                                         </div>
                                     </div>
+                                    
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="email">Email *</label>
-                                            <input type="email" class="form-control" id="email">
+                                            <input type="email"name="email" class="form-control" id="email">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="website">Website</label>
-                                    <input type="url" class="form-control" id="website">
+                                    <label for="website">Phone Number</label>
+                                    <input type="text"name="phone" class="form-control" id="phone">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="message">Message *</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    <textarea id="message" name="message" cols="30" rows="5" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="Leave a comment"
+                                    <input type="submit" name="submit" value="Leave a comment"
                                         class="btn btn-primary font-weight-semi-bold py-2 px-3">
                                 </div>
                             </form>

@@ -6,7 +6,7 @@
             <ul class="navbar-nav ml-n2">
               <li class="nav-item border-right border-secondary">
                 <a class="nav-link text-body small" href="#"
-                  >Monday, January 1, 2045</a
+                  ><?php echo date("Y-m-d");?></a
                 >
               </li>
               <li class="nav-item border-right border-secondary">
@@ -113,14 +113,18 @@
             
             <a href="contact.php" class="nav-item nav-link">Contact</a>
           </div>
+          <form action="search.php">
           <div
             class="input-group ml-auto d-none d-lg-flex"
             style="width: 100%; max-width: 300px"
           >
+          
             <input
-              type="text"
+              type="search"
               class="form-control border-0"
               placeholder="Keyword"
+              name="item"
+              required=""
             />
             <div class="input-group-append">
               <button
@@ -130,6 +134,7 @@
               </button>
             </div>
           </div>
+        </form>
         </div>
       </nav>
     </div>

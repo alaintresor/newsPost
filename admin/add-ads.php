@@ -30,11 +30,10 @@ else
 //rename the image file
 $imgnewfile=md5($imgfile).$extension;
 // Code for move image into directory
-move_uploaded_file($_FILES["postimage"]["tmp_name"],"postimages/".$imgnewfile);
+move_uploaded_file($_FILES["postimage"]["tmp_name"],"Adsimage/".$imgnewfile);
 
-$status=1;
-$owner=$_SESSION['id'];
-$query=mysqli_query($con,"insert into tblads(AdsType,Adsimage) values('$adstype','$imgnewfile')");
+
+$query=mysqli_query($con,"insert into ads(type,adsimage) values('$adstype','$imgnewfile')");
 if($query)
 {
 $msg="Advantisement successfully added ";
@@ -42,6 +41,7 @@ $msg="Advantisement successfully added ";
 else{
 $error="Something went wrong . Please try again.";    
 } 
+
 
 }
 }
@@ -60,14 +60,14 @@ $error="Something went wrong . Please try again.";
         <title>Newsportal | Add Post</title>
 
         <!-- Summernote css -->
-        <link href="../plugins/summernote/summernote.css" rel="stylesheet" />
+        <link href="plugins/summernote/summernote.css" rel="stylesheet" />
 
         <!-- Select2 -->
-        <link href="../plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
         <!-- Jquery filer css -->
-        <link href="../plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
-        <link href="../plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+        <link href="plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+        <link href="plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
 
         <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -227,14 +227,14 @@ function getSubCat(val) {
         <script src="assets/js/waves.js"></script>
         <script src="assets/js/jquery.slimscroll.js"></script>
         <script src="assets/js/jquery.scrollTo.min.js"></script>
-        <script src="../plugins/switchery/switchery.min.js"></script>
+        <script src="plugins/switchery/switchery.min.js"></script>
 
         <!--Summernote js-->
-        <script src="../plugins/summernote/summernote.min.js"></script>
+        <script src="plugins/summernote/summernote.min.js"></script>
         <!-- Select 2 -->
-        <script src="../plugins/select2/js/select2.min.js"></script>
+        <script src="plugins/select2/js/select2.min.js"></script>
         <!-- Jquery filer js -->
-        <script src="../plugins/jquery.filer/js/jquery.filer.min.js"></script>
+        <script src="plugins/jquery.filer/js/jquery.filer.min.js"></script>
 
         <!-- page specific js -->
         <script src="assets/pages/jquery.blog-add.init.js"></script>

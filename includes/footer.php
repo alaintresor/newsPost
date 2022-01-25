@@ -1,4 +1,8 @@
+<?php 
+$footerTranding=mysqli_query($connect,"SELECT * FROM `tblposts` WHERE `Is_Active`=1 ORDER BY `tblposts`.`views` DESC LIMIT 3;");
 
+$images=mysqli_query($connect,"SELECT id,PostImage FROM `tblposts` WHERE `Is_Active`=1  LIMIT 6");
+?>
     <!-- Footer Start -->
     <div class="container-fluid bg-dark pt-5 px-sm-3 px-md-5 mt-5">
       <div class="row py-4">
@@ -40,45 +44,21 @@
           <h5 class="mb-4 text-white text-uppercase font-weight-bold">
             Popular News
           </h5>
+          <?php
+             while ($row=mysqli_fetch_array($footerTranding)) {
+          ?>
           <div class="mb-3">
             <div class="mb-2">
-              <a
-                class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                href=""
-                >Business</a
-              >
-              <a class="text-body" href=""><small>Jan 01, 2045</small></a>
+              <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="category.php?catId=<?php echo $row['CategoryId'] ?>">
+            <?php $categoryInfor=mysqli_fetch_array(mysqli_query($connect,"SELECT `CategoryName` FROM `tblcategory` WHERE `id`='{$row['CategoryId']}'")); echo $categoryInfor[0]; ?>
+          </a>
+              <a class="text-body" href=""><small><?php echo $row['PostingDate'] ?></small></a>
             </div>
-            <a class="small text-body text-uppercase font-weight-medium" href=""
-              >Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a
+            <a class="small text-body text-uppercase font-weight-medium" href="read.php?id=<?php echo $row['id'] ?>"
+              ><?php echo $row['PostTitle'] ?></a
             >
           </div>
-          <div class="mb-3">
-            <div class="mb-2">
-              <a
-                class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                href=""
-                >Business</a
-              >
-              <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-            </div>
-            <a class="small text-body text-uppercase font-weight-medium" href=""
-              >Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a
-            >
-          </div>
-          <div class="">
-            <div class="mb-2">
-              <a
-                class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                href=""
-                >Business</a
-              >
-              <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-            </div>
-            <a class="small text-body text-uppercase font-weight-medium" href=""
-              >Lorem ipsum dolor sit amet elit. Proin vitae porta diam...</a
-            >
-          </div>
+          <?php } ?>
         </div>
         <div class="col-lg-3 col-md-6 mb-5">
           <h5 class="mb-4 text-white text-uppercase font-weight-bold">
@@ -99,36 +79,15 @@
             Flickr Photos
           </h5>
           <div class="row">
+            <?php
+            while ($row=mysqli_fetch_array($images)) {
+            ?>
             <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-1.jpg" alt=""
+              <a href="read.php?id=<?php echo $row[0] ?>"
+                ><img class="w-100" width="200" height="70" src="admin/postimages/<?php echo $row[1] ?>" alt=""
               /></a>
             </div>
-            <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-2.jpg" alt=""
-              /></a>
-            </div>
-            <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-3.jpg" alt=""
-              /></a>
-            </div>
-            <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-4.jpg" alt=""
-              /></a>
-            </div>
-            <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-5.jpg" alt=""
-              /></a>
-            </div>
-            <div class="col-4 mb-3">
-              <a href=""
-                ><img class="w-100" src="img/news-110x110-1.jpg" alt=""
-              /></a>
-            </div>
+            <?php } ?>
           </div>
         </div>
       </div>
